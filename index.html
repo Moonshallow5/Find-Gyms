@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Gyms</title>
+    <style>
+        /* Make the map fill the full viewport height */
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Find Gyms Near You</h2>
+    
+    <div id="map"></div>
+
+    <!-- Google Maps and Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZgyyyTZ0YNaamd31mkfo9yCbIhqJbH2I&libraries=places&callback=initMap" async defer></script>
+    <script>
+        let map;
+        let infowindow;
+
+        function initMap() {
+            // Define the location to center the map (e.g., Edinburgh, Scotland)
+            const centerLocation = { lat: 3.1319, lng: 101.6841 }; 
+
+            // Initialize the map centered on the chosen location
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: centerLocation,
+                zoom: 14,
+            });
+
+            // Initialize the info window for displaying gym details
+            infowindow = new google.maps.InfoWindow();
+
+            // Call the Places API to search for gyms near the center location
+            const service = new google.maps.places.PlacesService(map);
+            service.nearbySearch(
+                {
+                    location: centerLocation,
+                    radius: 2000, // Radius in meters
+                    type: ["gym"], // Search specifically for gyms
+                },
+                handleResults // Callback function to handle results
+            );
+        }
+
+        // Handle results from the Places API
+        function handleResults(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            }
+        }
+
+        // Create a marker for each gym and set up an info window
+        function createMarker(place) {
+    const marker = new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        title: place.name,
+    });
+
+    // Create a Places Service instance for fetching details
+    const service = new google.maps.places.PlacesService(map);
+
+    // Add click listener to marker
+    google.maps.event.addListener(marker, "click", () => {
+        // Fetch detailed place information using getDetails
+        service.getDetails({ placeId: place.place_id }, (details, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                infowindow.setContent(
+                    `<div>
+                        <strong>${details.name}</strong><br>
+                        Rating: ${details.rating || "N/A"}<br>
+                        Address: ${details.vicinity || "N/A"}<br>
+                        Website: ${details.website ? `<a href="${details.website}" target="_blank">${details.website}</a>` : "N/A"}<br>
+                        <a href="http://localhost:8501/?url=${encodeURIComponent(details.website)}" target="_blank">Analyze on Streamlit</a>
+                    </div>`
+                );
+                infowindow.open(map, marker);
+            } else {
+                infowindow.setContent(`<div><strong>${place.name}</strong><br>Details not available.</div>`);
+                infowindow.open(map, marker);
+            }
+        });
+    });
+}
+    </script>
+</body>
+</html>
