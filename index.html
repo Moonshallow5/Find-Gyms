@@ -79,7 +79,7 @@
                         Rating: ${details.rating || "N/A"}<br>
                         Address: ${details.vicinity || "N/A"}<br>
                         Website: ${details.website ? `<a href="${details.website}" target="_blank">${details.website}</a>` : "N/A"}<br>
-                        <a href="http://localhost:8501/?url=${encodeURIComponent(details.website)}" target="_blank">Analyze on Streamlit</a>
+                        Personal Web Scraper: <a href="http://localhost:8501/?url=${encodeURIComponent(details.website)}" target="_blank">Analyze on Streamlit</a>
                     </div>`
                 );
                 infowindow.open(map, marker);
