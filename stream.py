@@ -6,7 +6,7 @@ from urllib.parse import urlparse, parse_qs
 query_params = st.experimental_get_query_params()
 default_url = query_params.get("url", [""])[0]  # Default to an empty string if "url" parameter isn't provided
 
-st.title("yo yo yo yo")
+st.title("Gym Web Scraper")
 # Use the default_url as the initial value for the input field
 url = st.text_input("Enter Website URL", value=default_url)
 
