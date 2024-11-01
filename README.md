@@ -37,6 +37,6 @@ The program is still not 100% accurate in producing a valid response, the Ollama
 
 ## Future implementations
 
-- Utilize geojson API so that users can just input an address and get gyms close to that postcode 
+- Utilize geocoding API so that users can just input an address and get gyms close to that postcode 
 
 - Fix web scraping data so the machine learning model can understand webscraping result data better
