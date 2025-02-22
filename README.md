@@ -23,7 +23,9 @@ The textbox which asks for input utilizes langchain_ollama to classify the input
 
 
 ## 🔨How to use the program
-Please Git clone this repo and enable Live Preview on index.html and press "Analyze on Streamlit" to have Q&A with the model.
+Please Git clone this repo and enable Live Preview on index.html and press "Analyze on Streamlit" on any Gym location to have Q&A with the model.
+
+
 Enter your location and find gyms near you, and press on any of the gym markers to get further details as well as the "Analyze on Streamlit" to parse the data on the company website for you, and ask questions like "What are your membership prices" or "What are your opening hours" and get a valid output
 
 ## 🚧Challenges Faced
